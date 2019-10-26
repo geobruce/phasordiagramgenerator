@@ -3,16 +3,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Document</title>
 </head>
 <body style="background-color:gray">
-       <button id="myBtn">Try it</button>
+       <!-- <button id="myBtn">Try it</button> -->
+       <!-- <select multiple class="form-control" id="sel2">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+    </select> -->
+    <!-- <form class="form-inline"> -->
+        <div class="form-inline">
+          <label for="txtX2">x2:</label>
+          <input type="text" class="form-control" id="txtX2">
+        </div>
+        <div class="form-inline">
+          <label for="txtY2">y2:</label>
+          <input type="text" class="form-control" id="txtY2">
+        </div>
+        <div><input type="color" name="favcolor" id="colorInput" value="#ff0000"></div>
+        <button  id="btnADD" >ADD</button>
 
+      <!-- </form>  -->
     <script>
 var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
         
 
-        function drawLineC(x1,y1,x2,y2){
+function drawLineC(x1,y1,x2,y2){
             let line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
             line.setAttribute("x1", x1 );
             line.setAttribute("y1", y1 );
@@ -23,6 +45,29 @@ var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
             line.setAttribute("stroke-width", 2  );
             return line;
         }
+        function drawLineFromCenter(x2,y2){
+            let line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+            line.setAttribute("x1", 0 );
+            line.setAttribute("y1", 0 );
+            line.setAttribute("x2", x2 );
+            line.setAttribute("y2", -y2 );
+            line.setAttribute("stroke", "black");
+            line.setAttribute("stroke-linecap","round");
+            line.setAttribute("stroke-width", 2  );
+            return line;
+        }
+        function drawLineFromCenter(x2,y2,color){
+            let line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+            line.setAttribute("x1", 0 );
+            line.setAttribute("y1", 0 );
+            line.setAttribute("x2", x2 );
+            line.setAttribute("y2", -y2 );
+            line.setAttribute("stroke", color);
+            line.setAttribute("stroke-linecap","round");
+            line.setAttribute("stroke-width", 2  );
+            return line;
+        }
+        
         function drawLineDeg(x1,y1,length,angle){
             let line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
             line.setAttribute("x1", x1 );
@@ -80,13 +125,25 @@ var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
         svg.setAttribute("viewBox", "-256 -256 512 512");
         document.body.appendChild(svg);
         function draw(){
-            for(i=0; i < 25500; i++){
+            for(i=0; i < 255; i++){
             svg.appendChild(drawLineDeg(0,0,Math.random()*200,Math.random()*360,"rgb(" + (Math.random()*255).toString() + "," +  (Math.random()*255).toString() + "," + (Math.random()*255).toString() + ")"));
             }
         }
         //draw();
+        function add(){
+            let x2 = document.getElementById("txtX2").value;
+            let y2 = document.getElementById("txtY2").value;
+            if(!isNaN(x2) && !isNaN(y2)){
+                svg.appendChild(drawLineFromCenter(x2,y2,document.getElementById("colorInput").value));
+
+            }else{
+                alert("brol");
+            }
+        }
+       // document.getElementById("myBtn").addEventListener("click", draw);
+        document.getElementById("btnADD").addEventListener("click", add);
         
-        document.getElementById("myBtn").addEventListener("click", draw);
     </script>
+    
 </body>
 </html>
