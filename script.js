@@ -16,16 +16,19 @@ function drawLabels(){
     let textArea = document.getElementById("input_names");
 
     let lines = textArea.value.split("\n"); //Make an array where each item is based on one line of the label name list
-    
+
     let rect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-    let label_width = 30; // document.getElementById("label-width").value;
-    let label_height = 20;//document.getElementById("label-height").value;
-    let label_spacing = 3; //document.getElementById("label-spacing").value;
-  let label_margin = 1;
-  console.log(label_spacing);
+    let label_width = parseFloat(document.getElementById("label-width").value);
+    
+    let label_height = parseFloat(document.getElementById("label-height").value);
+    let label_spacing = parseFloat(document.getElementById("label-spacing").value);
+    let label_margin = parseFloat(document.getElementById("label-margin").value);
+
+    console.log([label_width, label_height,label_margin, label_spacing]);
+
     let x0 = 0;
     let y0 = 0;
-  
+
     let stock_width = document.getElementById("stock-width").value;
     let stock_height = document.getElementById("stock-height").value;
     let printed_labels = 0;
@@ -40,17 +43,17 @@ function drawLabels(){
         textline = drawText(x0+label_width/2,y0+label_height/2,lines[i],fontSize);
         svg.appendChild(textline);
         var box = textline.getBBox();
-        console.log(box.width);
-        console.log(box.height);
+        // console.log(box.width);
+        // console.log(box.height);
         
 
        // textline.setAttribute("x",x0 - box.width/2 + label_width/2);
        // textline.setAttribute("y",y0 + label_height/2);
-       fontSize = label_height/box.height*label_height;
+        fontSize = (label_height-label_margin*2)/box.height*label_height;
         textline.setAttribute("font-size",fontSize);
         box = textline.getBBox();
-        console.log(box.width);
-        console.log(box.height);
+        // console.log(box.width);
+        // console.log(box.height);
         
         if(box.width>(label_width-label_margin*2)){
           fontSize *= label_width / box.width;
@@ -83,7 +86,7 @@ function drawText(x,y,string,label_height){
     text.setAttribute("x", x);
     text.setAttribute("y", y);
     text.setAttribute("fill", "red");
-    text.setAttribute("dominant-baseline", "middle");
+    text.setAttribute("dominant-baseline", "mathematical");
     text.setAttribute("text-anchor", "middle");
  
   
