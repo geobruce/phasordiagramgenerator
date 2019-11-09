@@ -15,7 +15,7 @@
   
     
     <div class="lefttop" id="svg-window">
-    <svg id="labels" viewBox="0 0 30 30">
+    <svg id="labels" >
      </svg>
     </div>
 
@@ -35,11 +35,11 @@
     <fieldset>
         <legend>Stock size</legend>
         Width: <input type="number" value="300" id="stock-width"><br>
-        Height:<input type="number" value="300" id="stock-height">
+        Height:<input type="number" value="200" id="stock-height">
     </fieldset>
     <fieldset>
             <legend>Label size</legend>
-            Width: <input type="number" value="30" id="label-width"><br>
+            Width: <input type="number" value="40" id="label-width"><br>
             Height:<input type="number" value="12" id="label-height">
         </fieldset>
     <fieldset>
@@ -51,7 +51,9 @@
                 
                 
     Enter the list of labels you'd like to generate:
+    <!-- <textarea rows = "5" cols = "" id="input_names">A</textarea><br> -->
     <textarea rows = "5" cols = "" id="input_names">BC547&#13;&#10;ULN2003&#13;&#10;10µF&#13;&#10;100kΩ&#13;&#10;100mH&#13;&#10;Calamares&#13;&#10;ESP32&#13;&#10;ESP8266&#13;&#10;LoRa&#13;&#10;Gehakballetjes&#13;&#10;Kaas&#13;&#10;Bitches</textarea><br>
+    
     <input type="button" id="btn_process" value="Generate SVG"><br>
     <!-- <input type="button" id="btn_download" value="Download SVG"> -->
     <a  id="btn_download" href="">Right click save as, to download</a> 

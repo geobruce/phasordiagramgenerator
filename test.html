@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <svg id="svgContainer" height="500" width="500" viewBox="0 0 200 200">
+                <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;" />
+            </svg>
+            <hr/>
+            <button onclick="setImageSize(300)">Large</button>
+            <button onclick="setImageSize(100)">Small</button>
+            <br/>
+            <button onclick="setViewBox('0 0 100 100')">viewBox - half</button>
+            <button onclick="setViewBox('0 0 200 200')">viewBox - full</button>
+            <script>
+                function setImageSize(width){
+                    console.log(width);
+                    document.getElementById("svgContainer").setAttribute("width", width);
+                }
+            
+                function setViewBox(viewBoxProperties){
+                    document.getElementById("svgContainer").setAttribute("viewBox", viewBoxProperties);
+                }
+            </script>
+</body>
+</html>
