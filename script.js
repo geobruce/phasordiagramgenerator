@@ -1,18 +1,22 @@
 var svg;
 document.addEventListener("DOMContentLoaded", function(event) {
-    
-    svg = document.getElementById("labels");
-    let textArea = document.getElementById("input_names");
-    
-
     document.getElementById("btn_process").addEventListener("click", function() {
-        svg.innerHTML = ''; //Every time the button is clicked clear the SVG and start a clean drawing
         drawLabels();
     });
+    document.getElementById("stock-width").addEventListener("change", function() {drawLabels();});
+    document.getElementById("stock-height").addEventListener("change", function() {drawLabels();});
+    document.getElementById("label-width").addEventListener("change", function() {drawLabels();});
+    document.getElementById("label-height").addEventListener("change", function() {drawLabels();});
+    document.getElementById("label-spacing").addEventListener("change", function() {drawLabels();});
+    document.getElementById("label-margin").addEventListener("change", function() {drawLabels();});
+    document.getElementById("input_names").addEventListener("oninput", function() {drawLabels();});
+    
+    
     
 });
 function drawLabels(){
-
+    svg = document.getElementById("labels");
+    svg.innerHTML = ''; //Every time the button is clicked clear the SVG and start a clean drawing
     let textArea = document.getElementById("input_names");
 
     let lines = textArea.value.split("\n"); //Make an array where each item is based on one line of the label name list
