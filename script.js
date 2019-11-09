@@ -1,159 +1,117 @@
-var svg;
+var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+let lines = [];
+let id = 0;
+function getNewId(){
+    id+=1;
+    return "l"+id;
+}
+class Line{
+    constructor(x1, y1, x2, y2,lineStyle,lineEnd,color,lbl, id){
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.lineStyle = lineStyle;
+        this.lineEnd = lineEnd;
+        this.color = color;
+        this.lbl = lbl; 
+        this.id = id;
+    }
+}
+
+function trololo(){
+    let x1 = document.getElementById("txt_x1").value;
+    let y1 = document.getElementById("txt_y1").value;
+    let x2 = document.getElementById("txt_x2").value;
+    let y2 = document.getElementById("txt_y2").value;
+    let angle = document.getElementById("txt_angle").value;
+    let angle_notation = document.getElementById("select_angle").value;
+    
+    let lineStyle = document.getElementById("select_line_style").value;
+    let lineEnd = document.getElementById("select_line_end").value;
+    let color = document.getElementById("colorInput").value;
+    let lbl = document.getElementById("txt_label").value;
+
+    //alert("lil dicky"+ x1 + " " + y1 + " " + x2 + " " + y2 + " " + lineStyle + " " + lineEnd + " " + color + " " + lbl);
+}
+function hideSettings(){
+    let a = ["txt_x1","txt_y1","txt_x2","txt_y2","txt_angle","select_angle","select_angle_style","select_line_style","select_line_end","colorInput","txt_label","btnAdd"];
+
+    for(var i=0; i<a.length; i++){
+        $('label[for=' + a[i] + '], input#' + a[i]).hide();
+    }
+    for(var i=0; i<a.length; i++){
+        $('#' + a[i]).hide();
+    }
+}
 document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById("btn_process").addEventListener("click", function() {
-        drawLabels();
-    });
-    document.getElementById("btn_download").addEventListener("click", function() {
-        downloadSVG();
-    });
+    
+    svg.setAttribute("viewBox", "-256 -256 512 512");
+    // document.body.appendChild(svg);
+    document.getElementById("svg-window").appendChild(svg);
+    //alert("ik ben klaar");
+    document.getElementById("txt_x1").value = 0;
+    document.getElementById("txt_y1").value = 0;
+    document.getElementById("txt_x2").value = 40;
+    document.getElementById("txt_y2").value = 66;
+    document.getElementById("txt_angle").value = 45;
+    document.getElementById("select_angle").value = "Deg";
+    document.getElementById("select_line_style").value = "line-continue";
+    document.getElementById("select_line_end").value = "end-bullet";
+    document.getElementById("colorInput").value = "#00ff00";
+    document.getElementById("txt_label").value = "l";
 
-    document.getElementById("stock-width").addEventListener("change", function() {
-        drawLabels();
+    hideSettings();
+    document.getElementById("add_line").addEventListener("click", function() {
+        //hideSettings();
+        showLineSettingsCoordPair();
     });
-    document.getElementById("stock-height").addEventListener("change", function() {
-        drawLabels();
+    document.getElementById("btnADD").addEventListener("click", function() {
+        //hideSettings();
+        addLineSettingsCoordPair();
     });
-    document.getElementById("label-width").addEventListener("change", function() {
-        drawLabels();
-    });
-    document.getElementById("label-height").addEventListener("change", function() {
-        drawLabels();
-    });
-    document.getElementById("label-spacing").addEventListener("change", function() {
-        drawLabels();
-    });
-    document.getElementById("label-margin").addEventListener("change", function() {
-        drawLabels();
-    });
-    document.getElementById("input_names").addEventListener("oninput", function() {
-        drawLabels();
-    });
-    drawLabels();
-
-
+    
 });
 
-function downloadSVG() {
-    //get svg element.
-    var svg = document.getElementById("labels");
+function showLineSettingsCoordPair(){
+    let a = ["txt_x1","txt_y1","txt_x2","txt_y2","select_line_style","select_line_end","colorInput","txt_label","btnAdd"];
 
-    //get svg source.
-    var serializer = new XMLSerializer();
-    var source = serializer.serializeToString(svg);
-
-    //add name spaces.
-    if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
-        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    for(var i=0; i<a.length; i++){
+        $('label[for=' + a[i] + '], input#' + a[i]).show();
     }
-    if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
-        source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    for(var i=0; i<a.length; i++){
+        $('#' + a[i]).show();
     }
+}
+function drawLine(l){
+    let line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+    line.setAttribute("x1", l.x1);
+    line.setAttribute("y1", l.y1 );
+    line.setAttribute("x2", l.x2 );
+    line.setAttribute("y2", l.y2 );
+    line.setAttribute("stroke", l.color);
+    line.setAttribute("id",l.id);
+    line.setAttribute("stroke-linecap","round");
+    line.setAttribute("stroke-width", 2  );
+    svg.appendChild(line);
+}
+function addLineSettingsCoordPair(){
+    let x1 = document.getElementById("txt_x1").value;
+    let y1 = document.getElementById("txt_y1").value;
+    let x2 = document.getElementById("txt_x2").value;
+    let y2 = document.getElementById("txt_y2").value;
+    let angle = document.getElementById("txt_angle").value;
+    let angle_notation = document.getElementById("select_angle").value;
+    
+    let lineStyle = document.getElementById("select_line_style").value;
+    let lineEnd = document.getElementById("select_line_end").value;
+    let color = document.getElementById("colorInput").value;
+    let lbl = document.getElementById("txt_label").value;
 
-    //add xml declaration
-    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
-
-    //convert svg source to URI data scheme.
-    var url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
-
-    //set url value to a element's href attribute.
-    document.getElementById("btn_download").href = url;
-    //you can download svg file by right click menu.
+    let l = new Line(x1,y1,x2,y2,lineStyle,lineEnd,color,lbl, getNewId());
+    lines.push(l);
+    drawLine(l);
 }
 
-function drawLabels() {
-    svg = document.getElementById("labels");
-    svg.innerHTML = ''; //Every time the button is clicked clear the SVG and start a clean drawing
-    let textArea = document.getElementById("input_names");
-
-    let lines = textArea.value.split("\n"); //Make an array where each item is based on one line of the label name list
-
-    let rect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-    let label_width = parseFloat(document.getElementById("label-width").value);
-
-    let label_height = parseFloat(document.getElementById("label-height").value);
-    let label_spacing = parseFloat(document.getElementById("label-spacing").value);
-    let label_margin = parseFloat(document.getElementById("label-margin").value);
-
-    //console.log([label_width, label_height,label_margin, label_spacing]);
-
-    let x0 = 0;
-    let y0 = 0;
-
-    let stock_width = document.getElementById("stock-width").value;
-    let stock_height = document.getElementById("stock-height").value;
-    let printed_labels = 0;
-    //shape = document.getElementsByTagName("svg")[0];
-    // svg.setAttribute("viewBox", "0mm 0mm " + stock_width + " " + stock_height ); 
-    svg.appendChild(drawRect(0, 0, stock_width, stock_height, "stroke-width:1; fill: none; stroke: #990000"));
-    let labelsInRow = Math.floor(stock_width / (label_width + label_spacing));
-
-    for (var i = 0; i < lines.length; i++) {
-        let fontSize = label_height;
-        var recty = drawRect(x0, y0, label_width, label_height, "stroke-width:1; fill: none; stroke: #009900");
-        svg.appendChild(recty);
-        textline = drawText(x0 + label_width / 2, y0 + label_height / 2, lines[i], fontSize);
-        svg.appendChild(textline);
-        var box = textline.getBBox();
-        let ratioText = textline.getBBox().width / textline.getBBox().height;
-        let ratioRect = recty.getBBox().width / recty.getBBox().height;
-
-        if (ratioText > ratioRect) {
-            console.log("Width is limiting factor");
-            textline.setAttribute("font-size", ((recty.getBBox().width - 2 * label_margin) / textline.getBBox().width) * fontSize);
-        } else {
-            console.log("Height is limiting factor");
-            textline.setAttribute("font-size", ((recty.getBBox().height - 2 * -2 * label_margin) / textline.getBBox().height) * fontSize);
-        }
-
-        console.log([recty.getBBox().height / recty.getBBox().width, recty.getBBox().height, recty.getBBox().width]);
-        console.log([textline.getBBox().height / textline.getBBox().width, textline.getBBox().height, textline.getBBox().width]);
-
-        x0 += label_spacing + label_width;
-        if (x0 + label_width > stock_width) {
-            x0 = 0;
-            y0 += label_spacing + label_height;
-        }
-        if (y0 > stock_height) {
-            alert("Out of stock");
-        }
-        //y0 += label_spacing + label_height;  
-    }
-    resizeSVG();
-    downloadSVG();
-
-}
-
-function resizeSVG() {
-    var svg = document.getElementById("labels");
-    // Get the bounds of the SVG content
-    var bbox = svg.getBBox();
-    // Update the width and height using the size of the contents
-    svg.setAttribute("viewBox", "0 0 " + bbox.width + " " + bbox.height);
-    //svg.setAttribute("height", bbox.y + bbox.height + bbox.y);
-}
-
-function drawRect(x, y, width, height, style) {
-    let rect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-    rect.setAttribute("height", height + "mm");
-    rect.setAttribute("width", width + "mm");
-    rect.setAttribute("x", x + "mm");
-    rect.setAttribute("y", y + "mm");
-    rect.setAttribute("style", style);
-    return rect;
-}
-
-function drawText(x, y, string, label_height) {
-    let text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
-    text.setAttribute("x", x + "mm");
-    text.setAttribute("y", y + "mm");
-    text.setAttribute("fill", "red");
-    text.setAttribute("dominant-baseline", "mathematical");
-    text.setAttribute("text-anchor", "middle");
 
 
-    let textNode = document.createTextNode(string);
-    text.appendChild(textNode);
-    text.setAttribute("font-size", label_height);
-    // <text x="0" y="15" fill="red">I love SVG!</text>
-    return text;
-}
