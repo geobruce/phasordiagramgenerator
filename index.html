@@ -1,69 +1,75 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
-   
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
 
     <title>Label generator</title>
 </head>
+
 <body>
-  
-    
+
     <div class="lefttop" id="svg-window">
-    <svg id="labels" >
-     </svg>
+        <svg id="labels">
+        </svg>
     </div>
 
     <div class="righttop">
-        
-    <h1>Instructions</h1>
-    <ol>
-        <li>Enter the Stock material dimensions.</li>
-        <li>Enter the required label size.</li>
-        <li>Enter the Spacing and margin.</li>
-        <li>Enter a list of labels each line is a label.</li>
-        <li>Click the button to generate</li>
-        <li>After generation you can download the file by right clicking the link at the bottom. And selecting "save as".</li>
-    </ol>
-    
-    <h1>Menu options</h1>
-    <fieldset>
-        <legend>Stock size</legend>
-        Width: <input type="number" value="300" id="stock-width"><br>
-        Height:<input type="number" value="200" id="stock-height">
-    </fieldset>
-    <fieldset>
-            <legend>Label size</legend>
-            Width: <input type="number" value="40" id="label-width"><br>
-            Height:<input type="number" value="12" id="label-height">
+
+        <h1>Instructions</h1>
+        <ol>
+            <li>Enter the Stock material dimensions.</li>
+            <li>Enter the required label size.</li>
+            <li>Enter the Spacing and margin.</li>
+            <li>Enter a list of labels each line is a label.</li>
+            <li>Click the button to generate</li>
+            <li>After generation you can download the file by right clicking the link at the bottom. And selecting "save as".</li>
+        </ol>
+
+        <h1>Menu options</h1>
+        <fieldset>
+            <legend>Stock size</legend>
+            Width:
+            <input type="number" value="300" id="stock-width">
+            <br> Height:
+            <input type="number" value="200" id="stock-height">
         </fieldset>
-    <fieldset>
+        <fieldset>
+            <legend>Label size</legend>
+            Width:
+            <input type="number" value="40" id="label-width">
+            <br> Height:
+            <input type="number" value="12" id="label-height">
+        </fieldset>
+        <fieldset>
             <legend>Label spacing/margin</legend>
-            Spacing: <input type="number" value="1" id="label-spacing"><br>
-            Margin: <input type="number" value="1" id="label-margin">
-            
-    </fieldset>
-                
-                
-    Enter the list of labels you'd like to generate:
-    <!-- <textarea rows = "5" cols = "" id="input_names">A</textarea><br> -->
-    <textarea rows = "5" cols = "" id="input_names">BC547&#13;&#10;ULN2003&#13;&#10;10µF&#13;&#10;100kΩ&#13;&#10;100mH&#13;&#10;Calamares&#13;&#10;ESP32&#13;&#10;ESP8266&#13;&#10;LoRa&#13;&#10;Gehakballetjes&#13;&#10;Kaas&#13;&#10;Bitches</textarea><br>
-    
-    <input type="button" id="btn_process" value="Generate SVG"><br>
-    <!-- <input type="button" id="btn_download" value="Download SVG"> -->
-    <a  id="btn_download" href="">Right click save as, to download</a> 
- 
+            Spacing:
+            <input type="number" value="1" id="label-spacing">
+            <br> Margin:
+            <input type="number" value="1" id="label-margin">
+
+        </fieldset>
+
+        Enter the list of labels you'd like to generate:
+        <!-- <textarea rows = "5" cols = "" id="input_names">A</textarea><br> -->
+        <textarea rows="5" cols="" id="input_names">BC547&#13;&#10;ULN2003&#13;&#10;10µF&#13;&#10;100kΩ&#13;&#10;100mH&#13;&#10;Calamares&#13;&#10;ESP32&#13;&#10;ESP8266&#13;&#10;LoRa&#13;&#10;Gehakballetjes&#13;&#10;Kaas&#13;&#10;Bitches</textarea>
+        <br>
+
+        <input type="button" id="btn_process" value="Generate SVG">
+        <br>
+        <!-- <input type="button" id="btn_download" value="Download SVG"> -->
+        <a id="btn_download" href="">Right click save as, to download</a>
+
     </div>
 
-   
     </div>
-                        
 
-    
 </body>
+
 </html>
