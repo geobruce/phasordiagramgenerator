@@ -1,8 +1,8 @@
 var svg;
 document.addEventListener("DOMContentLoaded", function(event) {
-    document.getElementById("btn_process").addEventListener("click", function() {
-        drawLabels();
-    });
+    document.getElementById("btn_process").addEventListener("click", function() {drawLabels();});
+    document.getElementById("btn_download").addEventListener("click", function() {downloadSVG();});
+    
     document.getElementById("stock-width").addEventListener("change", function() {drawLabels();});
     document.getElementById("stock-height").addEventListener("change", function() {drawLabels();});
     document.getElementById("label-width").addEventListener("change", function() {drawLabels();});
@@ -14,6 +14,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     
 });
+
+function downloadSVG(){
+    //get svg element.
+var svg = document.getElementById("labels");
+
+//get svg source.
+var serializer = new XMLSerializer();
+var source = serializer.serializeToString(svg);
+
+//add name spaces.
+if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+}
+if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+}
+
+//add xml declaration
+source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+//convert svg source to URI data scheme.
+var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+//set url value to a element's href attribute.
+document.getElementById("btn_download").href = url;
+//you can download svg file by right click menu.
+}
+
 function drawLabels(){
     svg = document.getElementById("labels");
     svg.innerHTML = ''; //Every time the button is clicked clear the SVG and start a clean drawing
@@ -74,6 +102,8 @@ function drawLabels(){
         }
         //y0 += label_spacing + label_height;  
     }
+
+    downloadSVG();
 
 }
 function drawRect(x,y,width,height,style){
